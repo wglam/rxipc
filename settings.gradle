@@ -1,0 +1,1 @@
+include ':app', ':ipc-server', ':ipc-lib', ':ipc-rx-client', ':ipc-processor', ':ipc-annotations'

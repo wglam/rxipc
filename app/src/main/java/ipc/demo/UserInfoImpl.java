@@ -13,9 +13,12 @@ public class UserInfoImpl implements IUserInfo {
         return Observable.just(new User("张三"));
     }
 
+    private int i = 0;
+
     @Override
     public Observable<User> getUser(int id) {
-        return Observable.just(new User(id + "张三"));
+        i++;
+        return Observable.just(new User(" - - " + i + "  张三"));
     }
 
     @Override

@@ -12,20 +12,25 @@
         <activity android:name="ipc.demo.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name="ipc.server.IpcServerImpl"
             android:exported="false"
             android:process=":ipc">
 
             <intent-filter>
-
                 <action android:name="ipc.server" />
             </intent-filter>
         </service>
+        <service
+            android:name="ipc.demo.RemoteService"
+            android:exported="false"
+            android:process=":remote" />
     </application>
 
 </manifest>

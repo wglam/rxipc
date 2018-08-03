@@ -12,7 +12,7 @@ public class IpcServerImpl extends IpcServer {
     public Observable<Response> dispatchExecute(Request request) {
         try {
             if (IUserInfo.class.getName().equals(request.getClassName())) {
-                return new ExecuteUserInfo.Factory().create().executeRequest(request);
+                return ExecuteUserInfo.Factory.create().executeRequest(request);
             }
         } catch (Exception e) {
             e.printStackTrace();

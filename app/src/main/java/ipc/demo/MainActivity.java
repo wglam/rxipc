@@ -1,6 +1,7 @@
 package ipc.demo;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     int position = 0;
 
     public void exeMethod(View view) {
+        Intent intent = new Intent(this, RemoteService.class);
+        startService(intent);
         Disposable disposable = client.getUsers()
 
                 .observeOn(AndroidSchedulers.mainThread())
@@ -72,12 +75,12 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void accept(User user) throws Exception {
 
-                            Log.e("Api", String.valueOf(position) + " getUser :" + user);
+                            Log.e("getUser", String.valueOf(position) + " getUser :" + user);
                         }
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            Log.e("Api", String.valueOf(position) + " :" + throwable.getMessage());
+                            Log.e("getUser", String.valueOf(position) + " :" + throwable.getMessage());
                         }
                     });
 

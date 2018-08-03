@@ -83,8 +83,6 @@ public class ExecuteBuilder implements IGenerateBuilder {
 
         bindInterface.getMethodMap().values().forEach(method -> {
             methodBuilder.beginControlFlow("if ($S.equals($N))", method.getCode(), "method");
-            System.out.println("22222 " + method.getReturnType() + " ------- " + method.getReturnType().getClass());
-
             StringBuilder returns = new StringBuilder("return this.");
             returns.append(method.getName());
             returns.append("(");
@@ -159,13 +157,14 @@ public class ExecuteBuilder implements IGenerateBuilder {
 
     private TypeSpec.Builder factory(String className) {
         TypeSpec.Builder builder = TypeSpec.classBuilder("Factory")
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL, Modifier.STATIC)
-                .addSuperinterface(MyTypeName.IExecute_Factory);
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL, Modifier.STATIC);
+        builder.addMethod(MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PRIVATE)
+                .build());
         builder.addField(FieldSpec.builder(MyTypeName.IExecute, "execute", Modifier.PRIVATE, Modifier.STATIC).build());
         builder.addMethod(MethodSpec.methodBuilder("create")
                 .returns(MyTypeName.IExecute)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .beginControlFlow("if (execute == null) ")
                 .beginControlFlow("synchronized ($N.class)", className)
                 .beginControlFlow("if (execute == null) ")

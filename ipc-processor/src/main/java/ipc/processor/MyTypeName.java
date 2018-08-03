@@ -14,7 +14,6 @@ public class MyTypeName {
     public final static ClassName BaseIpcClient = ClassName.get("ipc.client", "IpcClient");
     public final static ClassName BaseIpcServer = ClassName.get("ipc.server", "IpcServer");
     public final static ClassName IExecute = ClassName.get("ipc.server", "IExecute");
-    public final static ClassName IExecute_Factory = ClassName.get("ipc.server.IExecute", "Factory");
     public final static ClassName Observable = ClassName.get("io.reactivex", "Observable");
     public final static ClassName OK = ClassName.get("ipc", "Ok");
     public final static ClassName RxFunction = ClassName.get("io.reactivex.functions", "Function");

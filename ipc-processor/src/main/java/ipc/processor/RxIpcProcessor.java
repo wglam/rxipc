@@ -56,15 +56,12 @@ public class RxIpcProcessor extends LogIpcProcessor {
             if (elem.getKind() == ElementKind.INTERFACE) {
                 BindInterface bindInterface = new BindInterface((TypeElement) elem);
 
-
                 Set<DeclaredType> providerInterfaces = getValueFieldOfClasses(getAnnotationMirror(elem, RxIpcInterface.class));
-                boolean isServer = false;
-                if (providerInterfaces.size() == 1) {
+                if (providerInterfaces.size() >= 1) {
                     for (DeclaredType providerInterface : providerInterfaces) {
-                        bindInterface.setImplMirror(providerInterface.asElement().asType());
                         TypeElement providerType = MoreTypes.asTypeElement(providerInterface);
                         if (providerType.getInterfaces().contains(elem.asType())) {
-                            isServer = true;
+                            bindInterface.setImplMirror(providerType.asType());
                             break;
                         }
                     }
@@ -79,7 +76,7 @@ public class RxIpcProcessor extends LogIpcProcessor {
                         clientBuilders.put(key, builder);
                     }
                 }
-                if (isServer) {
+                if (bindInterface.getImplMirror() != null) {
                     final String key = elem.getClass().getName() + "server";
                     ExecuteBuilder builder = serverExecuteBuilders.get(key);
                     if (builder == null) {
@@ -90,10 +87,7 @@ public class RxIpcProcessor extends LogIpcProcessor {
             }
 
         }
-
         makeFiles();
-        System.out.println("1111 " + processingEnv.getOptions());
-        System.out.println("1111 " + processingEnv.getFiler());
         return false;
     }
 
